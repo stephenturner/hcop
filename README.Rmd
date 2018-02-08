@@ -1,0 +1,51 @@
+---
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE)
+options(width = 1000)
+options(tibble.width = Inf)
+```
+
+# hcop:  HGNC Comparison of Orthology Predictions (HCOP)
+
+Human ortholog data from HGNC Comparison of Orthology Predictions (HCOP). The HGNC Comparison of Orthology Predictions (HCOP) integrates and displays the orthology assertions predicted for a specified human gene, or set of human genes, by eggNOG, Ensembl Compara, HGNC, HomoloGene, Inparanoid, NCBI Gene Orthology, OMA, OrthoDB, OrthoMCL, Panther, PhylomeDB, TreeFam and ZFIN. An indication of the reliability of a prediction is provided by the number of databases which concur. This package only contains ortholog data to chicken, fruitfly, mouse, rat, xenopus, and zebrafish. Others are available at <https://www.genenames.org/cgi-bin/hcop> via ftp at <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
+
+See [data-raw/hcop.R](data-raw/hcop.R) for how this data was generated.
+
+## Installation
+
+```{r, eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("stephenturner/hcop")
+```
+
+## Usage
+
+Get the mouse orthologs of your favorite genes
+
+```{r}
+library(hcop)
+library(dplyr)
+
+my_favorite_human_genes <- data_frame(human_symbol=c("TP53", "TNF", "EGFR", "VEGFA", "APOE", 
+                                                     "IL6", "TGFB1", "MTHFR", "ESR1", "AKT1"))
+my_favorite_human_genes
+my_favorite_human_genes %>% 
+  inner_join(mouse, by="human_symbol")
+```
+
+
+## All the data
+
+This package only contains ortholog data to chicken, fruitfly, mouse, rat, xenopus, and zebrafish. Others are available at <https://www.genenames.org/cgi-bin/hcop> via ftp at <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
+
+```{r}
+chicken
+fruitfly
+mouse
+rat
+xenopus
+zebrafish
+```
