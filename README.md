@@ -47,6 +47,7 @@ Get the mouse orthologs of your favorite genes
     ##  9 ESR1        
     ## 10 AKT1
 
+    # Join to mouse orthologs
     my_favorite_human_genes %>% 
       inner_join(mouse, by="human_symbol")
 
@@ -71,13 +72,50 @@ Get the mouse orthologs of your favorite genes
     ## 16 AKT1         Akt2         ENSG00000142208 ENSMUSG00000004056 207          11652        AKT serine/threonine kinase 1        thymoma viral proto-oncogene 2       OrthoMCL,OrthoDB                                                                             
     ## 17 AKT1         Akt3         ENSG00000142208 ENSMUSG00000019699 207          23797        AKT serine/threonine kinase 1        thymoma viral proto-oncogene 3       OrthoMCL,OrthoDB
 
+    # Continue the above, but collapse all other columns down to unique entries
+    my_favorite_human_genes %>% 
+      inner_join(mouse, by="human_symbol") %>% 
+      group_by(human_symbol) %>% 
+      summarize_all(funs(. %>% unique %>% paste(collapse=";")))
+
+    ## # A tibble: 10 x 9
+    ##    human_symbol mouse_symbol           human_ensembl   mouse_ensembl                                                               human_entrez mouse_entrez            human_name                           mouse_name                                                                                                                             support                                                                                               
+    ##    <chr>        <chr>                  <chr>           <chr>                                                                       <chr>        <chr>                   <chr>                                <chr>                                                                                                                                  <chr>                                                                                                 
+    ##  1 AKT1         Akt1;Akt2;Akt3         ENSG00000142208 ENSMUSG00000001729;ENSMUSG00000004056;ENSMUSG00000019699                    207          11651;11652;23797       AKT serine/threonine kinase 1        thymoma viral proto-oncogene 1;thymoma viral proto-oncogene 2;thymoma viral proto-oncogene 3                                           Inparanoid,HomoloGene,EggNOG,Ensembl,NCBI,OMA,HGNC,Treefam,Panther,OrthoDB;OrthoMCL,OrthoDB           
+    ##  2 APOE         Apoe                   ENSG00000130203 ENSMUSG00000002985                                                          348          11816                   apolipoprotein E                     apolipoprotein E                                                                                                                       Inparanoid,HomoloGene,EggNOG,Ensembl,OrthoMCL,PhylomeDB,NCBI,OMA,Treefam,HGNC,Panther,OrthoDB         
+    ##  3 EGFR         Egfr;Erbb4;Erbb2;Erbb3 ENSG00000146648 ENSMUSG00000020122;ENSMUSG00000062209;ENSMUSG00000062312;ENSMUSG00000018166 1956         13649;13869;13866;13867 epidermal growth factor receptor     epidermal growth factor receptor;erb-b2 receptor tyrosine kinase 4;erb-b2 receptor tyrosine kinase 2;erb-b2 receptor tyrosine kinase 3 Inparanoid,HomoloGene,EggNOG,Ensembl,OrthoMCL,PhylomeDB,NCBI,OMA,Treefam,HGNC,Panther,OrthoDB;OrthoMCL
+    ##  4 ESR1         Esr1                   ENSG00000091831 ENSMUSG00000019768                                                          2099         13982                   estrogen receptor 1                  estrogen receptor 1 (alpha)                                                                                                            Inparanoid,HomoloGene,EggNOG,Ensembl,PhylomeDB,OrthoMCL,NCBI,OMA,Treefam,HGNC,Panther,OrthoDB         
+    ##  5 IL6          Il6                    ENSG00000136244 ENSMUSG00000025746                                                          3569         16193                   interleukin 6                        interleukin 6                                                                                                                          Inparanoid,HomoloGene,EggNOG,Ensembl,PhylomeDB,NCBI,OMA,Treefam,HGNC,Panther,OrthoDB                  
+    ##  6 MTHFR        Mthfr                  ENSG00000177000 ENSMUSG00000029009                                                          4524         17769                   methylenetetrahydrofolate reductase  methylenetetrahydrofolate reductase                                                                                                    Inparanoid,HomoloGene,EggNOG,Ensembl,OrthoMCL,OMA,NCBI,Treefam,HGNC,Panther,OrthoDB                   
+    ##  7 TGFB1        Tgfb1                  ENSG00000105329 ENSMUSG00000002603                                                          7040         21803                   transforming growth factor beta 1    transforming growth factor, beta 1                                                                                                     Inparanoid,HomoloGene,EggNOG,Ensembl,OrthoMCL,PhylomeDB,NCBI,OMA,HGNC,Treefam,Panther,OrthoDB         
+    ##  8 TNF          Tnf                    ENSG00000232810 ENSMUSG00000024401                                                          7124         21926                   tumor necrosis factor                tumor necrosis factor                                                                                                                  Inparanoid,HomoloGene,Ensembl,PhylomeDB,OrthoMCL,NCBI,OMA,HGNC,Treefam,Panther,OrthoDB                
+    ##  9 TP53         Trp53;Trp63;Trp73      ENSG00000141510 ENSMUSG00000059552;ENSMUSG00000022510;ENSMUSG00000029026                    7157         22059;22061;22062       tumor protein p53                    transformation related protein 53;transformation related protein 63;transformation related protein 73                                  Inparanoid,HomoloGene,EggNOG,Ensembl,OrthoMCL,PhylomeDB,NCBI,OMA,HGNC,Treefam,Panther,OrthoDB;OrthoDB 
+    ## 10 VEGFA        Vegfa                  ENSG00000112715 ENSMUSG00000023951                                                          7422         22339                   vascular endothelial growth factor A vascular endothelial growth factor A                                                                                                   Inparanoid,HomoloGene,EggNOG,Ensembl,OrthoMCL,PhylomeDB,NCBI,OMA,HGNC,Treefam,Panther,OrthoDB
+
 All the data
 ------------
 
-This package only contains ortholog data to chicken, fruitfly, mouse,
-rat, xenopus, and zebrafish. Others are available at
+This package only contains ortholog data to *C. elegans*, chicken, fruit
+fly, mouse, rat, *Xenopus*, and zebrafish. Others are available at
 <https://www.genenames.org/cgi-bin/hcop> via ftp at
 <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
+
+    c.elegans
+
+    ## # A tibble: 65,161 x 9
+    ##    human_symbol c.elegans_symbol human_ensembl   c.elegans_ensembl human_entrez c.elegans_entrez human_name                                      c.elegans_name                        support                                                             
+    ##    <chr>        <chr>            <chr>           <chr>             <chr>        <chr>            <chr>                                           <chr>                                 <chr>                                                               
+    ##  1 A1CF         hrp-2            ENSG00000148584 WBGene00002000    29974        173086           APOBEC1 complementation factor                  human HnRNP A1 homolog                Ensembl,OrthoDB                                                     
+    ##  2 A2M          F13D2.1          ENSG00000175899 WBGene00008735    2            181305           alpha-2-macroglobulin                           hypothetical protein                  Panther                                                             
+    ##  3 A2M          tep-1            ENSG00000175899 WBGene00013969    2            173367           alpha-2-macroglobulin                           TEP (ThiolEster containing Protein)   EggNOG                                                              
+    ##  4 A2ML1        F13D2.1          ENSG00000166535 WBGene00008735    144568       181305           alpha-2-macroglobulin like 1                    hypothetical protein                  Panther                                                             
+    ##  5 A4GALT       fbxb-7           ENSG00000128274 WBGene00012492    53947        189498           alpha 1,4-galactosyltransferase (P blood group) F-box B protein                       OrthoDB                                                             
+    ##  6 A4GALT       Y20C6A.4         ENSG00000128274 WBGene00077495    53947        6418791          alpha 1,4-galactosyltransferase (P blood group) hypothetical protein                  OrthoDB                                                             
+    ##  7 A4GNT        fbxb-7           ENSG00000118017 WBGene00012492    51146        189498           alpha-1,4-N-acetylglucosaminyltransferase       F-box B protein                       OrthoDB                                                             
+    ##  8 A4GNT        Y20C6A.4         ENSG00000118017 WBGene00077495    51146        6418791          alpha-1,4-N-acetylglucosaminyltransferase       hypothetical protein                  OrthoDB                                                             
+    ##  9 AACS         sur-5            ENSG00000081760 WBGene00006351    65985        180992           acetoacetyl-CoA synthetase                      Acetoacetyl-CoA synthetase            Inparanoid,HomoloGene,Ensembl,Panther,OrthoMCL,OMA,PhylomeDB,OrthoDB
+    ## 10 AADAC        trcs-1           ENSG00000114771 WBGene00009186    13           177791           arylacetamide deacetylase                       TRansport of membrane to Cell Surface Ensembl,OMA,Panther,OrthoDB                                         
+    ## # ... with 65,151 more rows
 
     chicken
 

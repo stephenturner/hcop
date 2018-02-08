@@ -32,16 +32,25 @@ library(dplyr)
 my_favorite_human_genes <- data_frame(human_symbol=c("TP53", "TNF", "EGFR", "VEGFA", "APOE", 
                                                      "IL6", "TGFB1", "MTHFR", "ESR1", "AKT1"))
 my_favorite_human_genes
+
+# Join to mouse orthologs
 my_favorite_human_genes %>% 
   inner_join(mouse, by="human_symbol")
+
+# Continue the above, but collapse all other columns down to unique entries
+my_favorite_human_genes %>% 
+  inner_join(mouse, by="human_symbol") %>% 
+  group_by(human_symbol) %>% 
+  summarize_all(funs(. %>% unique %>% paste(collapse=";")))
 ```
 
 
 ## All the data
 
-This package only contains ortholog data to chicken, fruitfly, mouse, rat, xenopus, and zebrafish. Others are available at <https://www.genenames.org/cgi-bin/hcop> via ftp at <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
+This package only contains ortholog data to _C. elegans_, chicken, fruit fly, mouse, rat, _Xenopus_, and zebrafish. Others are available at <https://www.genenames.org/cgi-bin/hcop> via ftp at <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
 
 ```{r}
+c.elegans
 chicken
 fruitfly
 mouse

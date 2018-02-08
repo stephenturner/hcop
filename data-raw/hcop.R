@@ -19,7 +19,7 @@ create_ortholog_tibble <- function(organism) {
 }
 create_ortholog_tibble("mouse")
 
-critters <- c("chicken", "fruitfly", "mouse", "rat", "xenopus", "zebrafish")
+critters <- c("c.elegans", "chicken", "fruitfly", "mouse", "rat", "xenopus", "zebrafish")
 
 hcop <- map(critters, create_ortholog_tibble) %>% set_names(critters)
 
@@ -27,5 +27,5 @@ attach(hcop)
 # paste(critters, collapse=", ")
 
 # Save data in the package, and remove the original list objects
-devtools::use_data(chicken, fruitfly, mouse, rat, xenopus, zebrafish, overwrite=TRUE, compress='xz')
+devtools::use_data(c.elegans, chicken, fruitfly, mouse, rat, xenopus, zebrafish, overwrite=TRUE, compress='xz')
 devtools::use_package("tibble")
