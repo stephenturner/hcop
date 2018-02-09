@@ -10,7 +10,7 @@ options(tibble.width = Inf)
 
 # hcop:  HGNC Comparison of Orthology Predictions
 
-Human ortholog data from HGNC Comparison of Orthology Predictions (HCOP). The HGNC Comparison of Orthology Predictions (HCOP) integrates and displays the orthology assertions predicted for a specified human gene, or set of human genes, by eggNOG, Ensembl Compara, HGNC, HomoloGene, Inparanoid, NCBI Gene Orthology, OMA, OrthoDB, OrthoMCL, Panther, PhylomeDB, TreeFam and ZFIN. An indication of the reliability of a prediction is provided by the number of databases which concur. This package only contains ortholog data to _C. elegans_, chicken, fruitfly, mouse, rat, xenopus, and zebrafish. Others are available at <https://www.genenames.org/cgi-bin/hcop> via ftp at <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
+Human ortholog data from HGNC Comparison of Orthology Predictions (HCOP). The HGNC Comparison of Orthology Predictions (HCOP) integrates and displays the orthology assertions predicted for a specified human gene, or set of human genes, by eggNOG, Ensembl Compara, HGNC, HomoloGene, Inparanoid, NCBI Gene Orthology, OMA, OrthoDB, OrthoMCL, Panther, PhylomeDB, TreeFam and ZFIN. An indication of the reliability of a prediction is provided by the number of databases which concur. Data collected from HCOP at <https://www.genenames.org/cgi-bin/hcop> via ftp at <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
 
 See [data-raw/hcop.R](data-raw/hcop.R) for how this data was generated.
 
@@ -23,7 +23,7 @@ devtools::install_github("stephenturner/hcop")
 
 ## Usage
 
-Get the mouse orthologs of your favorite genes
+Get the mouse orthologs of your favorite genes:
 
 ```{r}
 library(hcop)
@@ -47,14 +47,42 @@ my_favorite_human_genes %>%
 
 ## All the data
 
-This package only contains ortholog data to _C. elegans_, chicken, fruit fly, mouse, rat, _Xenopus_, and zebrafish. Others are available at <https://www.genenames.org/cgi-bin/hcop> via ftp at <ftp://ftp.ebi.ac.uk/pub/databases/genenames/hcop/>.
+Data from the following organisms are available:
+
+- `anole_lizard`
+- `c.elegans`
+- `chicken`
+- `chimpanzee`
+- `cow`
+- `dog`
+- `fruitfly`
+- `horse`
+- `macaque`
+- `mouse`
+- `opossum`
+- `pig`
+- `platypus`
+- `rat`
+- `s.cerevisiae`
+- `xenopus`
+- `zebrafish`
 
 ```{r}
+anole_lizard
 c.elegans
 chicken
+chimpanzee
+cow
+dog
 fruitfly
+horse
+macaque
 mouse
+opossum
+pig
+platypus
 rat
+s.cerevisiae
 xenopus
 zebrafish
 ```

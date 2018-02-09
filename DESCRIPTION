@@ -1,7 +1,7 @@
 Package: hcop
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Stephen", "Turner", email = "vustephen@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9140-9028"))
 Maintainer: Stephen Turner <vustephen@gmail.com>
 Description: Human ortholog data from HGNC Comparison of Orthology Predictions (HCOP).
